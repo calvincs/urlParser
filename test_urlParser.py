@@ -129,11 +129,11 @@ def test_urlParseEngine():
 	"""
 	urld 		= UrlDeconstruction()
 	resTest1 	= urld.urlParseEngine("scheme://user:pass@www.domain.com:8080/p1/p2/p3/page.do?arg1=one+two&arg2=2&arg3=three3;arg4#AnchorOnPage")
-	urld 		= UrlDeconstruction()
+	urld.flush()
 	resTest2 	= urld.urlParseEngine("scheme://user:pass@127.0.0.1:8080/p1/p2/p3/page.do?arg1=one+two&arg2=2&arg3=three3;arg4#AnchorOnPage")
-	urld 		= UrlDeconstruction()
+	urld.flush()
 	resTest3 	= urld.urlParseEngine("scheme://user:pass@localhost:8080/p1/p2/p3/page.do?arg1=one+two&arg2=2&arg3=three3;arg4#AnchorOnPage")
-	urld 		= UrlDeconstruction()
+	urld.flush()
 	resTest4 	= urld.urlParseEngine("scheme://user:pass@[::1]:8080/p1/p2/p3/page.do?arg1=one+two&arg2=2&arg3=three3;arg4#AnchorOnPage")
 
 	#Testing Results - This needs to be cleaned up / order keys

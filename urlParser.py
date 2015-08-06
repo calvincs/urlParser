@@ -12,7 +12,7 @@ class UrlDeconstruction:
 	"""
 		UrlDeconstruction Class
 			
-		Requirements: 
+		Requirements:
 			Python3
 			urllib3==1.7.1
 			netaddr==0.7.15
@@ -24,7 +24,14 @@ class UrlDeconstruction:
 	def __init__(self):
 		#Initialize Variables
 		self._urlComponents 	= {}
-		self._urlString 		= None
+		self._urlString 		= ''
+
+	def flush(self):
+		"""
+			Re-Initialize Variables
+		"""
+		self._urlComponents 	= {}
+		self._urlString 		= ''
 
 	def findPattern(self, patternList, testString):
 		"""
@@ -40,7 +47,7 @@ class UrlDeconstruction:
 				if pattern:
 					return regExpKey
 			else:
-				return None
+				return False
 		except Exception:
 			traceback.print_exc()
 
@@ -54,7 +61,7 @@ class UrlDeconstruction:
 			self._urlString 		= urlString
 			self._urlComponents.update(components)
 		except Exception:
-			stacktrace.print_exc()
+			traceback.print_exc()
 
 	def returnJson(self):
 		"""
@@ -119,10 +126,7 @@ class UrlDeconstruction:
 
 		finally:
 			#Return results
-			if results:
-				return (results, newUrlString)
-			else:
-				return results
+			return (results, newUrlString)
 
 	def parseIpv6(self, urlString):
 		"""
@@ -174,10 +178,7 @@ class UrlDeconstruction:
 
 		finally:
 			#Return results
-			if results:
-				return (results, newUrlString)
-			else:
-				return results
+			return (results, newUrlString)
 
 	def parseDomain(self, urlString):
 		"""
@@ -380,10 +381,6 @@ class UrlDeconstruction:
 			See comments
 		"""
 		try:
-			#0. 	Class variables
-			if self._urlComponents: self._urlComponents	= {}
-			if self._urlString:		self._urlString		= None
-
 			#1. 	Clean the URL, as it may be qouted
 			cleanUrl 	= urllib.parse.unquote(urlInput)
 
@@ -393,8 +390,6 @@ class UrlDeconstruction:
 			if cleanUrl != urlInput: 
 				self._urlComponents['clean_url'] = cleanUrl
 				urlInput = cleanUrl
-			else:
-				pass
 
 			#3. 	Set the urlString variable
 			self._urlString = urlInput
@@ -402,42 +397,42 @@ class UrlDeconstruction:
 			#4. 	Begin main parse logic
 			# 		--Scheme
 			outScheme 	= self.parseScheme(self._urlString)
-			if outScheme: self.updateStates(outScheme)
-			
+			if outScheme != (None, ''): self.updateStates(outScheme)
+
 			#		--Credentials
 			outCreds	= self.parseCredentials(self._urlString)
-			if outCreds:  self.updateStates(outCreds)
-			
+			if outCreds != (None, ''):  self.updateStates(outCreds)
+
+
 			#5. 	IPv4/6 and Domain Parsing, First match wins
 			matchToggle = False
-
-			#		--IPv6
+			#--IPv6
 			outIpv6		= self.parseIpv6(self._urlString)
-			if outIpv6 and matchToggle is False:
+			if outIpv6 != (None, '') and matchToggle is False:
 				self.updateStates(outIpv6)
 				matchToggle = True
 
-			#		--IPv4
+			#--IPv4
 			outIpv4		= self.parseIpv4(self._urlString)
-			if outIpv4 and matchToggle is False:
+			if outIpv4 != (None, '') and matchToggle is False:
 				self.updateStates(outIpv4)
 				matchToggle = True
 
-			#		--Domain
+			#--Domain
 			outDomain	= self.parseDomain(self._urlString)
-			if outDomain and matchToggle is False:
+			if outDomain != (None, '') and matchToggle is False:
 				self.updateStates(outDomain)
 				matchToggle = True
 
 			#6. 	Path Parsing
 			outPath	= self.parsePath(self._urlString)
-			if outPath:	self.updateStates(outPath)
+			if outPath!= (None, ''):	self.updateStates(outPath)
 
 			#7. 	CGI/Anchor Parsing	
 			outCGI	= self.parseCGI(self._urlString)
-			if outCGI:	self.updateStates(outCGI)
-		
-		except Exception:
+			if outCGI != (None, ''):	self.updateStates(outCGI)
+
+		except Exception as err:
 			traceback.print_exc()
 
 		finally:
