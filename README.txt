@@ -21,19 +21,19 @@ Some URL Examples
 ===================
 
 Named URL Versions:
-	scheme://user:pass@domain.com:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
-	scheme://user:pass@subdomains.domain.com:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#Anchor
+scheme://user:pass@domain.com:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
+scheme://user:pass@subdomains.domain.com:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#Anchor
 
 IPv4 URL Versions:
-	scheme://user:pass@127.0.0.1:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
-	scheme://user:pass@3221226219:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
-	scheme://user:pass@0xC0.0x00.0x02.0xEB:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
-	scheme://user:pass@0300.0000.0002.0353:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
-	scheme://user:pass@0xC00002EB:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
+scheme://user:pass@127.0.0.1:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
+scheme://user:pass@3221226219:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
+scheme://user:pass@0xC0.0x00.0x02.0xEB:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
+scheme://user:pass@0300.0000.0002.0353:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
+scheme://user:pass@0xC00002EB:8080/path1/path2/path3/page?arg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
 
 IPv6 URL Versions:
-	scheme://user:pass@[::1]:8080/path1/path2/path3/pagearg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
-	scheme://user:pass@338288524927261089654170743795120240736:8080/path1/path2/path3/page?arg1=one#AnchorOnPage
+scheme://user:pass@[::1]:8080/path1/path2/path3/pagearg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
+scheme://user:pass@338288524927261089654170743795120240736:8080/path1/path2/path3/page?arg1=one#AnchorOnPage
 
 
 Output Examples
