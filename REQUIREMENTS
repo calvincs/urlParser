@@ -1,0 +1,4 @@
+Python3
+urllib3==1.7.1  or higher
+netaddr==0.7.15 or higher
+pytest==2.7.2   or higher
