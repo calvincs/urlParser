@@ -32,7 +32,7 @@ scheme://user:pass@0300.0000.0002.0353:8080/1/page?arg1=one
 scheme://user:pass@0xC00002EB:8080/p1/p2/p3/page?arg1=one+two&arg2=2
 
 IPv6 URL Versions:
-scheme://user:pass@[::1]:8080/p1/p2/p3/pagearg1=one+two&arg2=2;arg3=three;arg4#AnchorOnPage
+scheme://user:pass@[::1]:8080/p1/p2/p3/page?arg1=one+two;arg3=three#AnchorOnPage
 scheme://338288524927261089654170743795120240736:8080/page?arg1=one
 
 
