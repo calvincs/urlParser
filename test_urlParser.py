@@ -153,7 +153,7 @@ def test_urlParseEngine():
 							'cgi': {'arg2': '2', 'arg3': 'three3', 'arg1': 'one+two', '#': 'AnchorOnPage', 'arg4': ''}
 							}
 
-	assert resTest3 	== {'cgi': {'arg1': 'one+two', 'arg4': '', 'anchor': 'AnchorOnPage', 'arg2': '2', 'arg3': 'three3'}, 
+	assert resTest3 	== {'cgi': {'arg1': 'one+two', 'arg4': '', '#': 'AnchorOnPage', 'arg2': '2', 'arg3': 'three3'}, 
 							'scheme': 'scheme://', 
 							'input_url': 'scheme://user:pass@localhost:8080/p1/p2/p3/page.do?arg1=one+two&arg2=2&arg3=three3;arg4#AnchorOnPage', 
 							'path': 'p1/p2/p3/page.do', 
