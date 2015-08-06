@@ -81,7 +81,7 @@ class UrlDeconstruction:
 			regDec 		=	re.compile('^([\d]{10})(:([\d]{1,5})(/|$)|/|$)')
 
 			#Collection of patterns
-			ipv4RegPatterns	=	 {	'DotNot' : regDotNot, 
+			ipv4RegPatterns	=	 {	'DotNot' : regDotNot,
 								  	'DotHex' : regDotHex,
 								  	'DotOct' : regDotOct,
 								  	'HexDec' : regHexDec,
@@ -135,7 +135,7 @@ class UrlDeconstruction:
 			regOct	=	re.compile('^([\d]{39})(:([\d]{1,5})(/|$)|/|$)', re.IGNORECASE)
 
 			#Collection of patterns
-			ipv6RegPatterns	=	 {	'Std' : regStd, 
+			ipv6RegPatterns	=	 {	'Std' : regStd,
 								  	'Oct' : regOct}
 
 			#Create Dict & vars for results
@@ -189,7 +189,7 @@ class UrlDeconstruction:
 			regValid	=	re.compile('^localhost|[a-z]{2,}', re.IGNORECASE)
 
 			#Create Dict & vars for results
-			results				= {}
+			results 			= {}
 			results['domain'] 	= {}
 			newUrlString		= ''
 
@@ -272,8 +272,8 @@ class UrlDeconstruction:
 
 			#Create Dict & vars for results
 			results 				= {}
-			results['credential']	= {}
-			newUrlString			= ''
+			results['credential'] 	= {}
+			newUrlString 			= ''
 
 			#Parse urlString
 			out = [m.end(0) for m in regCreds.finditer(urlString)]
@@ -309,7 +309,7 @@ class UrlDeconstruction:
 
 			#Create Dict & vars for results
 			results 			= {}
-			results['path']		= {}
+			results['path'] 	= {}
 			newUrlString 		= ''
 
 			#Parse urlString
@@ -340,7 +340,7 @@ class UrlDeconstruction:
 			regCGI		=	re.compile('([\w]+)[:=] ?"?([\w\+\(\)]+)"?|(\w+)|(#)')
 
 			#Create Dict for results
-			results 			= {}
+			results				= {}
 			results['cgi']		= {}
 
 			#Parse urlString
@@ -361,8 +361,8 @@ class UrlDeconstruction:
 					if values[3]: anchorToggle 		= True	#Pound symbol found, capture the Anchor
 					
 					#Capture Values
-					if v0:						results['cgi'][v0] = v1
-					if v2 and anchorToggle:		results['cgi']['anchor'] = v2
+					if v0: 						results['cgi'][v0] = v1
+					if v2 and anchorToggle: 	results['cgi']['anchor'] = v2
 					if v2 and not anchorToggle:	results['cgi'][v2] = ''
 			else:
 				results =  None
