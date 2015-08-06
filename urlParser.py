@@ -186,17 +186,25 @@ class UrlDeconstruction:
 		"""
 		try:
 			#Domain Regex
-			regDom		=	re.compile('^([\w\-\.]*)(:([\d]{1,5})(/|$)|/|$)', re.IGNORECASE)
-			regValid	=	re.compile('^localhost|[a-z]{2,}', re.IGNORECASE)
+			regDom		=	re.compile('^([\w\-\.]*\.[\w]*)(:([\d]{1,5})(/|$)|/|$)', re.IGNORECASE)
+			regLoc		=	re.compile('^(localhost)(:([\d]{1,5})(/|$)|/|$)', re.IGNORECASE)
+
+			#Collection of patterns
+			domRegPatterns	=	 {	'Dom' : regDom,
+								  	'Loc' : regLoc}
 
 			#Create Dict & vars for results
 			results 			= {}
 			results['domain'] 	= {}
 			newUrlString		= ''
 
+			#Find Pattern to use
+			regExpKey	= self.findPattern(domRegPatterns, urlString)
+
 			#Parse urlString
-			out = [m for m in regDom.findall(urlString)]
-			if out:
+			if regExpKey:
+				regPattern 	= domRegPatterns[regExpKey]
+				out 		= [m for m in regPattern.findall(urlString)]
 				fqdnData 	= [(w,y, len(w+x)) for w,x,y,z in out][0]
 				fqdn 		= fqdnData[0]
 				port 		= fqdnData[1]
@@ -206,9 +214,6 @@ class UrlDeconstruction:
 				if port: 	results['domain']['port']	= port
 				if fqdn: 	results['domain']['fqdn']	= fqdn
 				if tldPos:	results['domain']['tld']	= tld
-
-				#Warn user of possible invalid domain name
-				if not regValid.findall(fqdn):	results['domain']['warning'] = 'invalid_fqdn'
 
 				#Extract SLD Information
 				subData = [(x.start(), x.end()) for x in re.finditer('\.', fqdn)] # Get tuples of all '.' positions
