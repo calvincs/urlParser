@@ -363,7 +363,7 @@ class UrlDeconstruction:
 					
 					#Capture Values
 					if v0: 						results['cgi'][v0] = v1
-					if v2 and anchorToggle: 	results['cgi']['anchor'] = v2
+					if v2 and anchorToggle: 	results['cgi']['#'] = v2
 					if v2 and not anchorToggle:	results['cgi'][v2] = ''
 			else:
 				results =  None

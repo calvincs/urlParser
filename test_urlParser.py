@@ -120,7 +120,7 @@ def test_parseCGI():
 	#Testing Results
 	assert resCGI1 	== ({'cgi': {'arg1': 'one+two', 'arg3': 'three3', 'arg2': '2'}}, '')
 	assert resCGI2 	== ({'cgi': {'arg3': 'three', 'arg1': 'one+two', 'arg2': '2', 'arg4': ''}}, '')
-	assert resCGI3 	== ({'cgi': {'anchor': 'PageAnchor', 'arg3': 'three', 'arg4': '', 'arg1': 'one+two', 'arg2': '2'}}, '')
+	assert resCGI3 	== ({'cgi': {'#': 'PageAnchor', 'arg3': 'three', 'arg4': '', 'arg1': 'one+two', 'arg2': '2'}}, '')
 	assert resCGI4 	== (None, '')
 
 def test_urlParseEngine():
@@ -142,7 +142,7 @@ def test_urlParseEngine():
 							'credential': {'password': 'pass', 'username': 'user'}, 
 							'scheme': 'scheme://', 
 							'path': 'p1/p2/p3/page.do', 
-							'cgi': {'arg2': '2', 'arg3': 'three3', 'arg4': '', 'arg1': 'one+two', 'anchor': 'AnchorOnPage'}
+							'cgi': {'arg2': '2', 'arg3': 'three3', 'arg4': '', 'arg1': 'one+two', '#': 'AnchorOnPage'}
 							}
 	
 	assert resTest2 	== {'path': 'p1/p2/p3/page.do', 
@@ -150,7 +150,7 @@ def test_urlParseEngine():
 							'credential': {'username': 'user', 'password': 'pass'}, 
 							'scheme': 'scheme://', 
 							'ipv4': {'type': 'dotnot', 'address': '127.0.0.1', 'port': '8080'}, 
-							'cgi': {'arg2': '2', 'arg3': 'three3', 'arg1': 'one+two', 'anchor': 'AnchorOnPage', 'arg4': ''}
+							'cgi': {'arg2': '2', 'arg3': 'three3', 'arg1': 'one+two', '#': 'AnchorOnPage', 'arg4': ''}
 							}
 
 	assert resTest3 	== {'cgi': {'arg1': 'one+two', 'arg4': '', 'anchor': 'AnchorOnPage', 'arg2': '2', 'arg3': 'three3'}, 
@@ -162,7 +162,7 @@ def test_urlParseEngine():
 							}
 	assert resTest4 	== {'ipv6': {'port': '8080', 'type': 'std', 'address': '::1'}, 
 							'scheme': 'scheme://', 
-							'cgi': {'arg4': '', 'arg2': '2', 'arg3': 'three3', 'anchor': 'AnchorOnPage', 'arg1': 'one+two'}, 
+							'cgi': {'arg4': '', 'arg2': '2', 'arg3': 'three3', '#': 'AnchorOnPage', 'arg1': 'one+two'}, 
 							'credential': {'username': 'user', 'password': 'pass'}, 
 							'path': 'p1/p2/p3/page.do', 
 							'input_url': 'scheme://user:pass@[::1]:8080/p1/p2/p3/page.do?arg1=one+two&arg2=2&arg3=three3;arg4#AnchorOnPage'
