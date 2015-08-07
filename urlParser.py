@@ -8,6 +8,7 @@ import re
 import json
 import traceback
 
+
 class UrlDeconstruction:
 	"""
 		UrlDeconstruction Class
@@ -187,11 +188,13 @@ class UrlDeconstruction:
 		try:
 			#Domain Regex
 			regDom		=	re.compile('^([\w\-\.]*\.[\w]*)(:([\d]{1,5})(/|$)|/|$)', re.IGNORECASE)
-			regLoc		=	re.compile('^(localhost)(:([\d]{1,5})(/|$)|/|$)', re.IGNORECASE)
+			regHst		=	re.compile('^(localhost)(:([\d]{1,5})(/|$)|/|$)', re.IGNORECASE)
+			regLoc		=	re.compile('^([\w\-\.]{1,}[a-z]{1})(:([\d]{1,5})(/|$)|/|$)', re.IGNORECASE)
 
 			#Collection of patterns
 			domRegPatterns	=	 {	'Dom' : regDom,
-								  	'Loc' : regLoc}
+								  	'Loc' : regLoc,
+								  	'Hst' : regHst}
 
 			#Create Dict & vars for results
 			results 			= {}
@@ -429,11 +432,17 @@ class UrlDeconstruction:
 				self.updateStates(outDomain)
 				matchToggle = True
 
-			#6. 	Path Parsing
+			#6. 	Filter Step, if no host information was found, we should stop
+			if not matchToggle:
+				warningMessage = ({'warning_message': 'unable to determine host, stopping parser'}, '')
+				self.updateStates(warningMessage)
+				raise Exception("Unable to determine host, stopping parser")
+
+			#7. 	Path Parsing
 			outPath	= self.parsePath(self._urlString)
 			if outPath!= (None, ''):	self.updateStates(outPath)
 
-			#7. 	CGI/Anchor Parsing	
+			#8. 	CGI/Anchor Parsing	
 			outCGI	= self.parseCGI(self._urlString)
 			if outCGI != (None, ''):	self.updateStates(outCGI)
 
