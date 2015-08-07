@@ -1,4 +1,4 @@
-urlParser
+urlParser      v1.0
 ===================
 Command line script to parse url into its individual components, returns results as JSON
 
@@ -43,8 +43,8 @@ Command Line:
 
 JSON Output:
 {
+    "#": "AnchorOnPage",
     "cgi": {
-        "#": "AnchorOnPage",
         "arg1": "one+two",
         "arg2": "2",
         "arg3": "three",
@@ -64,3 +64,11 @@ JSON Output:
     "path": "path1/path2/path3/page",
     "scheme": "scheme://"
 }
+
+Thoughts
+===================
+"...A good programmer is someone who always looks both ways before crossing a one-way street." 
+        - Doug Linder
+
+"...premature optimization is the root of all evil." 
+        - Donald Knuth
