@@ -223,9 +223,9 @@ class UrlDeconstruction:
 				if len(subData) == 1:	# Domain contains only SLD
 					results['domain']['sld'] 	= fqdn[:subData[0][0]]
 				elif len(subData) > 1:	# Domain has more then one sub domain
-					posSLD 		= (subData[len(subData)-2][1], subData[len(subData)-1][0])
+					posSLD 						= (subData[len(subData)-2][1], subData[len(subData)-1][0])
 					results['domain']['sld'] 	= fqdn[posSLD[0]:posSLD[1]]
-					posHostSLD	= posSLD[0] -1
+					posHostSLD					= posSLD[0] -1
 					results['domain']['host'] 	= fqdn[:posHostSLD]
 				else:
 					pass
@@ -306,7 +306,32 @@ class UrlDeconstruction:
 
 		finally:
 			#Return results
-			return (results, newUrlString)			
+			return (results, newUrlString)
+
+	def parseAnchor(self, urlString):
+		"""
+			Attempt to get Anchor from url string
+		"""	
+		try:
+			#Create Dict & vars for results
+			results 			= {}
+			newUrlString 		= ''
+
+			#If urlString Contains an Anchor, extract that now
+			if urlString.find("#") >= 0:
+				anchorPos 			= urlString.find('#')
+				results['#'] 		= urlString[anchorPos+1:]
+				newUrlString		= urlString[:anchorPos]
+
+			else:
+				results = None
+
+		except Exception:
+			traceback.print_exc()
+
+		finally:
+			#Return results
+			return (results, newUrlString)
 
 	def parsePath(self, urlString):
 		"""
@@ -346,35 +371,28 @@ class UrlDeconstruction:
 		"""
 		try:
 			#CGI Regex
-			regCGI		=	re.compile('([\w]+)[:=] ?"?([\w\+\(\)]+)"?|(\w+)|(#)')
+			regCGI		=	re.compile('([\w]+)[:= ] ?"?([\w\+\(\)]+)"?|^([\w]*)|;([\w]*)$')
 
-			#Create Dict for results
+			#Create Dict and vars for results
 			results				= {}
 			results['cgi']		= {}
+			foundAnchor			= False
 
 			#Parse urlString
 			out = regCGI.findall(urlString)
-			if out:
-				#Init parsing variables
-				cgiValues 		= {}
-				anchorValue		= None
-				anchorToggle 	= False
+			if out != [('', '', '', '')]:
 				for values in out:
 					#Shorten Value Names
 					v0 = values[0]
 					v1 = values[1]
 					v2 = values[2]
 					v3 = values[3]
+					if v0:	results['cgi'][v0] = v1
+					if v2:	results['cgi'][v2] = ''
+					if v3:	results['cgi'][v3] = ''
 
-					#Perform Logic to get values
-					if values[3]: anchorToggle 		= True	#Pound symbol found, capture the Anchor
-					
-					#Capture Values
-					if v0: 						results['cgi'][v0] = v1
-					if v2 and anchorToggle: 	results['cgi']['#'] = v2
-					if v2 and not anchorToggle:	results['cgi'][v2] = ''
 			else:
-				results =  None
+				if not foundAnchor:	results =  None
 
 		except Exception:
 			traceback.print_exc()
@@ -427,7 +445,7 @@ class UrlDeconstruction:
 				matchToggle = True
 
 			#--Domain
-			outDomain	= self.parseDomain(self._urlString)
+			outDomain	 = self.parseDomain(self._urlString)
 			if outDomain != (None, '') and matchToggle is False:
 				self.updateStates(outDomain)
 				matchToggle = True
@@ -438,9 +456,13 @@ class UrlDeconstruction:
 				self.updateStates(warningMessage)
 				raise Exception("Unable to determine host, stopping parser")
 
+			#New. 	Anchor Parsing - We are going to remove the Anchor if it exist vs working our way to it.
+			outAnchor = self.parseAnchor(self._urlString)
+			if outAnchor != (None, ''): self.updateStates(outAnchor)
+
 			#7. 	Path Parsing
 			outPath	= self.parsePath(self._urlString)
-			if outPath!= (None, ''):	self.updateStates(outPath)
+			if outPath != (None, ''):	self.updateStates(outPath)
 
 			#8. 	CGI/Anchor Parsing	
 			outCGI	= self.parseCGI(self._urlString)
