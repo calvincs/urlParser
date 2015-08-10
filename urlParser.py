@@ -27,13 +27,6 @@ class UrlDeconstruction:
 		self._urlComponents 	= {}
 		self._urlString 		= ''
 
-	def flush(self):
-		"""
-			Re-Initialize Variables
-		"""
-		self._urlComponents 	= {}
-		self._urlString 		= ''
-
 	def findPattern(self, patternList, testString):
 		"""
 			Takes a dict of patterns, finds match against testString
@@ -339,7 +332,7 @@ class UrlDeconstruction:
 		"""
 		try:
 			#Path Regex
-			regPath		=	re.compile('^([\w\./]*)')
+			regPath		=	re.compile('^([\w\./\(\)-]*)')
 
 			#Create Dict & vars for results
 			results 			= {}
@@ -407,6 +400,10 @@ class UrlDeconstruction:
 			See comments
 		"""
 		try:
+			#0. 	Clear Vars
+			self._urlComponents 	= {}
+			self._urlString 		= ''
+			
 			#1. 	Clean the URL, as it may be qouted
 			cleanUrl 	= urllib.parse.unquote(urlInput)
 
