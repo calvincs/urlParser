@@ -332,7 +332,7 @@ class UrlDeconstruction:
 		"""
 		try:
 			#Path Regex
-			regPath		=	re.compile('^([\w\./\(\)-]*)')
+			regPath		=	re.compile('^([\w\./\(\,)\-]*)')			
 
 			#Create Dict & vars for results
 			results 			= {}
@@ -364,7 +364,7 @@ class UrlDeconstruction:
 		"""
 		try:
 			#CGI Regex
-			regCGI		=	re.compile('([\w]+)[:= ] ?"?([\w\+\(\)]+)"?|^([\w]*)|;([\w]*)$')
+			regCGI		=	re.compile('([\w\-\.]+)[:= ] ?"?([\w\-\.\+\(\)\s:\/]+)"?|^([\w\-\.]*)|;([\w\-\.]*)$')
 
 			#Create Dict and vars for results
 			results				= {}
@@ -375,6 +375,7 @@ class UrlDeconstruction:
 			out = regCGI.findall(urlString)
 			if out != [('', '', '', '')]:
 				for values in out:
+					print(values)
 					#Shorten Value Names
 					v0 = values[0]
 					v1 = values[1]
