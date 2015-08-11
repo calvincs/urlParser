@@ -375,7 +375,6 @@ class UrlDeconstruction:
 			out = regCGI.findall(urlString)
 			if out != [('', '', '', '')]:
 				for values in out:
-					print(values)
 					#Shorten Value Names
 					v0 = values[0]
 					v1 = values[1]
